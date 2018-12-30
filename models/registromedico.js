@@ -30,6 +30,12 @@ module.exports = (sequelize, DataTypes) => {
   });
   RegistroMedico.associate = function(models) {
     // associations can be defined here
+    RegistroMedico.belongsTo(models.Paciente, {
+      foreignKey: {
+        name: 'id_paciente',
+        allowNull: false,
+      }
+    });
   };
   return RegistroMedico;
 };
