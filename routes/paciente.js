@@ -3,50 +3,29 @@
 var express = require('express');
 var router = express.Router();
 
-// Obtener modelo Paciente.
+const controlador = require('../controllers/controlador');
 const Paciente = require('../models/index').Paciente;
-const Cliente = require('../models/index').Cliente;
 
 // Muestra una lista con todos los pacientes.
-router.get('/', (req, res) => {
-    console.log("-------------------------------------------------");
-    console.log("Listar pacientes");
-    console.log("-------------------------------------------------");
-
-    Paciente.findAll({ include: [{ all: true }] }).then((pacientes) => {
-        return res.send(pacientes);
-    }).catch((err) => {
-        console.log("Ocurrio un error.");
-        console.log(err);
-
-        res.status = 400;
-        res.send(err);
-    });
-});
+router.get('/', (req, res) => controlador.listar(req, res, Paciente));
 
 // Realiza una consulta a la tabla Paciente y retorna los resultados.
-router.get('/search', (req, res) => {
-    res.send("Buscar pacientes");
-});
+//router.get('/search', (req, res) => controlador.(req,res,Cliente));
 
-router.get('/:id', (req, res) => {
-    res.send("Obtener paciente con ID:" + (req.body.id != null ? req.params.id : 'NO ID'));
-});
+// Obtiene un paciente por su id.
+router.get('/:id', (req, res) => controlador.getById(req, res, Paciente));
 
 // Crea un paciente.
-router.post('/', (req, res) => {
-    res.send("Crear paciente");
-});
+router.post('/', (req, res) => controlador.crear(req, res, Paciente));
 
 // Elimina un paciente.
-router.delete('/:id', (req, res) => {
-    res.send("Eliminar paciente");
-});
+router.delete('/:id', (req, res) => controlador.eliminar(req, res, Paciente));
 
 // Actualiza un paciente.
-router.put('/', (req, res) => {
-    res.send("Actualizar paciente");
-})
+router.put('/', (req, res) => controlador.actualizar(req, res, Paciente))
+
+// Exportar el router.
+module.exports = router;
 
 // Exportar el router.
 module.exports = router;

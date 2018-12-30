@@ -14,12 +14,16 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 
+//Redireccionar.
+app.get('/', (req, res) => res.redirect('/api/'));
 
-app.use('/clientes', clienteRouter);
-app.use('/pacientes', pacienteRouter);
-app.use('/registros', registroMedicoRouter);
+//Rutas.
+app.get('/api/', (req, res) => res.send('FiVet API'));
+app.use('/api/clientes', clienteRouter);
+app.use('/api/pacientes', pacienteRouter);
+app.use('/api/registros', registroMedicoRouter);
 
 
 app.listen(3000, () => {
-    console.log('Server is up on port 3000');
+    console.log('Ir a http://localhost:3000/api/');
 });

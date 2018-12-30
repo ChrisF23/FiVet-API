@@ -3,51 +3,26 @@
 var express = require('express');
 var router = express.Router();
 
-//const controladorCliente = require('../controllers/cliente');
-
-// Obtener modelo Cliente.
+const controlador = require('../controllers/controlador');
 const Cliente = require('../models/index').Cliente;
 
 // Muestra una lista con todos los clientes.
-router.get('/', (req, res) => {
-    console.log("-------------------------------------------------");
-    console.log("Listar clientes");
-    console.log("-------------------------------------------------");
-
-    Cliente.findAll({ include: [{ all: true }] }).then((clientes) => {
-        return res.send(clientes);
-    }).catch((err) => {
-        console.log("Ocurrio un error.");
-        console.log(err);
-
-        res.status = 400;
-        res.send(err);
-    });
-});
+router.get('/', (req, res) => controlador.listar(req, res, Cliente));
 
 // Realiza una consulta a la tabla Cliente y retorna los resultados.
-router.get('/search', (req, res) => {
-    res.send("Buscar clientes");
-});
+//router.get('/search', (req, res) => controlador.(req,res,Cliente));
 
-router.get('/:id', (req, res) => {
-    res.send("Obtener cliente con ID: " + (req.body.id != null ? req.body.id : 'NO ID'));
-});
+// Obtiene un cliente por su id.
+router.get('/:id', (req, res) => controlador.getById(req, res, Cliente));
 
 // Crea un Cliente.
-router.post('/', (req, res) => {
-    res.send("Crear cliente");
-});
+router.post('/', (req, res) => controlador.crear(req, res, Cliente));
 
 // Elimina un Cliente.
-router.delete('/:id', (req, res) => {
-    res.send("Eliminar cliente");
-});
+router.delete('/:id', (req, res) => controlador.eliminar(req, res, Cliente));
 
 // Actualiza un Cliente.
-router.put('/', (req, res) => {
-    res.send("Actualizar cliente");
-})
+router.put('/', (req, res) => controlador.actualizar(req, res, Cliente))
 
 // Exportar el router.
 module.exports = router;
