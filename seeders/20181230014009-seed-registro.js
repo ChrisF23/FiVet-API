@@ -5,6 +5,7 @@ module.exports = {
 
     return queryInterface.bulkInsert('RegistroMedico', [
       {
+        id_paciente: 1,
         motivo: "Se pego en la patita",
         peso: 10,
         temperatura: 35,
