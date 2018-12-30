@@ -22,6 +22,15 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       }
     });
-  };
+
+    Paciente.belongsTo(models.Cliente, {
+      foreignKey: {
+        name: 'id_cliente',
+        allowNull: false,
+      }
+    });
+
+
+  }
   return Paciente;
 };
