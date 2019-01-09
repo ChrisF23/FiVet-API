@@ -1,18 +1,40 @@
+const Modelos = require('../models/index');
+
 module.exports = {
     listar: function (req, res, Modelo) {
         console.log("-------------------------------------------------");
         console.log("[Listar]");
         console.log("-------------------------------------------------");
 
-        Modelo.findAll({ include: [{ all: true }] }).then((resultados) => {
-            return res.send(resultados);
-        }).catch((err) => {
-            console.log("Ocurrio un error.");
-            console.log(err);
+        if (Modelos.Paciente == Modelo) {
+            Modelo.findAll(
+                {
+                    include: [{ all: true }],
 
-            res.status = 400;
-            res.send(err);
-        });
+                    order: [
+                        [{ model: Modelos.RegistroMedico }, 'fecha_edicion', 'DESC']
+                    ]
+                }
+            ).then((resultados) => {
+                return res.send(resultados);
+            }).catch((err) => {
+                console.log("Ocurrio un error.");
+                console.log(err);
+
+                res.status = 400;
+                res.send(err);
+            });
+        } else {
+            Modelo.findAll({ include: [{ all: true }] }).then((resultados) => {
+                return res.send(resultados);
+            }).catch((err) => {
+                console.log("Ocurrio un error.");
+                console.log(err);
+
+                res.status = 400;
+                res.send(err);
+            });
+        }
     },
 
     crear: function (req, res, Modelo) {
