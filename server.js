@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const clienteRouter = require('./routes/cliente');
 const pacienteRouter = require('./routes/paciente');
 const registroMedicoRouter = require('./routes/registroMedico');
-
+const usuarioRouter = require('./routes/usuario')
 
 const app = express();
 
@@ -29,7 +29,7 @@ app.get('/api/', (req, res) => res.send('FiVet API'));
 app.use('/api/clientes', clienteRouter);
 app.use('/api/pacientes', pacienteRouter);
 app.use('/api/registros', registroMedicoRouter);
-
+app.use('/api/usuarios', usuarioRouter);
 
 app.listen(3000, () => {
     console.log('Ir a http://localhost:3000/api/');
