@@ -96,18 +96,30 @@ module.exports = {
         console.log("[BORRAR]");
         console.log("--------------------------------------------");
 
-        return Modelo.destroy({
+        Modelo.destroy({
             where: {
                 id: req.param('id')
             }
-        }, function (err) {
-            res.status(400);
-            res.send(err);
-            return;
-        }).catch((err) => {
-            console.log('Ocurrio un error: ', err.message)
-            console.log("CATCH");
-            return res.send(err);
+        }).then((result) => {
+            if (Modelos.Paciente == Modelo) {
+                Modelos.RegistroMedico.destroy(
+                    {
+                        where: {
+                            id_paciente: req.param('id')
+                        }
+                    }
+                ).then(() => {
+                    res.status(200);
+                    res.send("eliminado correctamente");
+                    return;
+                }).catch((err) => {
+                    console.log("Ocurrio un error.");
+                    console.log(err);
+    
+                    res.status = 400;
+                    res.send(err);
+                });
+            }
         });
     },
 
